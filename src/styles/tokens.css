@@ -1,0 +1,21 @@
+:root {
+  --ground: #0e131a;
+  --panel: #121821;
+  --raised: #161d27;
+  --line: #263040;
+  --line-strong: #34425a;
+  --text: #e7ecf3;
+  --text-soft: #c9d4e2;
+  --muted: #a9b8ca;
+  --accent: #7cc4ff;
+  --accent-ink: #0b1220;
+  --warn: #e5a66a;
+  --warn-line: #c98a4b;
+  --error: #ffaaa5;
+
+  --sans: "IBM Plex Sans", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --mono: "IBM Plex Mono", ui-monospace, "Cascadia Mono", Consolas, monospace;
+
+  --radius: 10px;
+  --radius-small: 6px;
+}
