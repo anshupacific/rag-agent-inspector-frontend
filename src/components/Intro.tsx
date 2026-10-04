@@ -7,7 +7,7 @@ export default function Intro({ compact }: { compact: boolean }) {
         <p>
           This agent answers only from five reference guides, and the guides contain deliberately wrong facts. When it
           says the capital of India is Mumbai, it is reading the document, not guessing. Ask a question and the inspector
-          shows each step, the passages it found and the ones it used.
+          shows each step, the passages it found and used, and how the answer scores.
         </p>
       )}
     </section>

@@ -1,6 +1,7 @@
 import { formatDuration, formatNumber, plural, stripMarkers } from "../lib/format";
 import type { Run } from "../types";
 import AnswerText from "./AnswerText";
+import EvaluationSummary from "./EvaluationSummary";
 
 interface Props {
   run: Run;
@@ -69,6 +70,8 @@ export default function RunCard({ run, selected, onInspect }: Props) {
           </div>
         </dl>
       )}
+
+      {run.evaluation && <EvaluationSummary evaluation={run.evaluation} />}
 
       {!selected && (
         <button type="button" className="quiet" onClick={onInspect}>

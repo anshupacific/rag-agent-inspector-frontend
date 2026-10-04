@@ -1,4 +1,5 @@
 import type { Run } from "../types";
+import EvaluationPanel from "./EvaluationPanel";
 import EvidencePanel from "./EvidencePanel";
 import StepsPanel from "./StepsPanel";
 
@@ -23,6 +24,16 @@ export default function Inspector({ run }: { run: Run | null }) {
       </div>
 
       <StepsPanel steps={steps} running={run.status === "running"} />
+
+      {result && result.response_id && (
+        <>
+          <div className="inspector-head">
+            <h2>Evaluation</h2>
+            <p className="inspector-count">How this one answer scores, checked right after it was given</p>
+          </div>
+          <EvaluationPanel evaluation={run.evaluation} requestError={run.evaluationError} />
+        </>
+      )}
 
       {result && (
         <>

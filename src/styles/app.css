@@ -19,6 +19,7 @@ body {
 
 h1,
 h2,
+h3,
 p,
 ol,
 ul,
@@ -503,6 +504,16 @@ input {
   border: 1px solid var(--warn-line);
 }
 
+.badge-pass {
+  color: var(--accent-ink);
+  background: var(--accent);
+}
+
+.badge-fail {
+  color: var(--warn);
+  border: 1px solid var(--warn-line);
+}
+
 .passage summary {
   min-height: 32px;
   font-size: 14px;
@@ -526,6 +537,118 @@ input {
 
 .inspector-agent code {
   color: var(--text-soft);
+}
+
+/* ---------- Evaluation ---------- */
+
+.evaluation {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+.evaluation h3 {
+  margin: 0 0 8px;
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--muted);
+}
+
+.eval-list {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding: 0;
+  list-style: none;
+}
+
+.eval-row {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  padding: 12px 14px;
+  background: var(--ground);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+}
+
+.eval-row-head {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 6px 12px;
+  font-weight: 500;
+}
+
+.eval-score {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.eval-number {
+  font-family: var(--mono);
+  font-size: 20px;
+  line-height: 1;
+}
+
+.eval-detail,
+.eval-footnote,
+.eval-running {
+  font-size: 14px;
+  color: var(--muted);
+}
+
+.eval-reason {
+  margin-top: 4px;
+  font-size: 14px;
+  color: var(--text-soft);
+}
+
+.eval-failed {
+  font-size: 14px;
+  color: var(--warn);
+}
+
+.eval-footnote {
+  margin-top: 8px;
+}
+
+.eval-subchecks {
+  margin: 2px 0 0;
+  padding-left: 18px;
+  font-size: 14px;
+  color: var(--text-soft);
+}
+
+.run-eval {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px 8px;
+  padding: 12px 0 0;
+  list-style: none;
+  border-top: 1px solid var(--line);
+}
+
+.run-eval li {
+  padding: 2px 10px;
+  font-size: 13px;
+  border: 1px solid var(--line-strong);
+  border-radius: 999px;
+}
+
+.run-eval-pass {
+  color: var(--accent);
+}
+
+.run-eval-fail {
+  color: var(--warn);
+  border-color: var(--warn-line);
+}
+
+.run-eval-pending {
+  color: var(--muted);
 }
 
 /* ---------- Small screens ---------- */

@@ -1,7 +1,7 @@
 /** Calls to the Agent Inspector backend. */
 
 import { API_BASE_URL } from "../config";
-import type { AgentResult, Step } from "../types";
+import type { AgentResult, Evaluation, Step } from "../types";
 import { readSse } from "./sse";
 
 /** An error whose message is safe to show to the visitor. */
@@ -23,30 +23,38 @@ export interface StreamHandlers {
 
 const UNREACHABLE = "The backend did not respond. Check your connection and ask again.";
 
-async function post(path: string, question: string, baseUrl: string): Promise<Response> {
+/** Send a request and turn any failure into an ApiError with a readable message. */
+async function request(url: string, init: RequestInit | undefined, fallbackMessage: string): Promise<Response> {
   let response: Response;
   try {
-    response = await fetch(`${baseUrl}${path}`, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ question }),
-    });
+    response = await fetch(url, init);
   } catch {
     throw new ApiError(UNREACHABLE);
   }
   if (!response.ok) {
-    let detail = "The agent could not answer. Ask again in a moment.";
+    let detail = fallbackMessage;
     try {
       const body = await response.json();
       if (typeof body?.detail === "string") detail = body.detail;
     } catch {
-      /* keep the default message */
+      /* keep the fallback message */
     }
-    // 400 = bad question, 429 = rate limit: retrying will not help.
-    throw new ApiError(detail, response.status === 400 || response.status === 429);
+    // 400 = bad input, 404 = gone, 429 = rate limit: retrying will not help.
+    throw new ApiError(detail, [400, 404, 429].includes(response.status));
   }
   return response;
 }
+
+function postJson(url: string, body: unknown, fallbackMessage: string): Promise<Response> {
+  return request(
+    url,
+    { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify(body) },
+    fallbackMessage,
+  );
+}
+
+const ASK_FAILED = "The agent could not answer. Ask again in a moment.";
+const EVALUATION_FAILED = "This answer could not be evaluated.";
 
 export async function checkHealth(baseUrl = API_BASE_URL): Promise<boolean> {
   try {
@@ -57,9 +65,11 @@ export async function checkHealth(baseUrl = API_BASE_URL): Promise<boolean> {
   }
 }
 
+// ---------- Answers ----------
+
 /** One question in, the full answer out. No live updates. */
 export async function ask(question: string, baseUrl = API_BASE_URL): Promise<AgentResult> {
-  const response = await post("/api/ask", question, baseUrl);
+  const response = await postJson(`${baseUrl}/api/ask`, { question }, ASK_FAILED);
   return (await response.json()) as AgentResult;
 }
 
@@ -69,7 +79,7 @@ export async function askStream(
   handlers: StreamHandlers,
   baseUrl = API_BASE_URL,
 ): Promise<AgentResult> {
-  const response = await post("/api/ask/stream", question, baseUrl);
+  const response = await postJson(`${baseUrl}/api/ask/stream`, { question }, ASK_FAILED);
   if (!response.body) throw new ApiError("The browser could not read the live answer.");
 
   for await (const message of readSse(response.body)) {
@@ -97,4 +107,19 @@ export async function askWithFallback(
     if (error instanceof ApiError && error.final) throw error;
     return ask(question, baseUrl);
   }
+}
+
+// ---------- Per-answer evaluation ----------
+
+/** Start scoring an answer. Returns the instant checks; Foundry's scores follow later. */
+export async function startEvaluation(responseId: string, baseUrl = API_BASE_URL): Promise<Evaluation> {
+  const response = await postJson(`${baseUrl}/api/evaluations`, { response_id: responseId }, EVALUATION_FAILED);
+  return (await response.json()) as Evaluation;
+}
+
+/** Current state of an evaluation; `status` becomes "completed" when the scores are in. */
+export async function getEvaluation(responseId: string, baseUrl = API_BASE_URL): Promise<Evaluation> {
+  const url = `${baseUrl}/api/evaluations/${encodeURIComponent(responseId)}`;
+  const response = await request(url, undefined, EVALUATION_FAILED);
+  return (await response.json()) as Evaluation;
 }
