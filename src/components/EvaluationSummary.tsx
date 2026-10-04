@@ -16,8 +16,11 @@ export default function EvaluationSummary({ evaluation }: { evaluation: Evaluati
       {evaluation.status === "failed" && <li className="run-eval-pending">Foundry scores unavailable</li>}
       {scored.map((evaluator) => (
         <li key={evaluator.name} className={evaluator.passed === false ? "run-eval-fail" : "run-eval-pass"}>
-          {evaluator.label} {formatScore(evaluator.score as number)}
-          {evaluator.passed === false ? ", fail" : ""}
+          {evaluator.scale === "pass_fail"
+            ? `${evaluator.label}: ${evaluator.passed === false ? "fail" : "pass"}`
+            : `${evaluator.label} ${formatScore(evaluator.score as number)}${
+                evaluator.scale === "five_point" ? " of 5" : ""
+              }${evaluator.passed === false ? ", fail" : ""}`}
         </li>
       ))}
     </ul>

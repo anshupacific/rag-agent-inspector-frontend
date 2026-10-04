@@ -1,21 +1,49 @@
+/* Light theme. Each section of the page has its own colour family. */
 :root {
-  --ground: #0e131a;
-  --panel: #121821;
-  --raised: #161d27;
-  --line: #263040;
-  --line-strong: #34425a;
-  --text: #e7ecf3;
-  --text-soft: #c9d4e2;
-  --muted: #a9b8ca;
-  --accent: #7cc4ff;
-  --accent-ink: #0b1220;
-  --warn: #e5a66a;
-  --warn-line: #c98a4b;
-  --error: #ffaaa5;
+  /* Page */
+  --ground: #f3f5f9;
+  --surface: #ffffff;
+  --line: #d8dee8;
+  --line-strong: #b7c1d1;
+  --text: #172033;
+  --text-soft: #35415a;
+  --muted: #586478;
+  --link: #1d4ed8;
+
+  /* Ask a question: amber */
+  --ask: #b45309;
+  --ask-ink: #8a3c06;
+  --ask-tint: #fff5e2;
+  --ask-line: #efd49c;
+
+  /* What the agent did: blue */
+  --steps: #1d4ed8;
+  --steps-tint: #eef3ff;
+  --steps-line: #c3d3fa;
+  --steps-highlight: #dbe6ff;
+
+  /* Evaluation: violet */
+  --eval: #6d28d9;
+  --eval-tint: #f4efff;
+  --eval-line: #d8c9fa;
+
+  /* Evidence: teal */
+  --evidence: #0f766e;
+  --evidence-tint: #e8f6f3;
+  --evidence-line: #b5ded8;
+
+  /* Results, the same in every section */
+  --pass: #166534;
+  --pass-tint: #dcfce7;
+  --pass-line: #8fd6a9;
+  --fail: #b42318;
+  --fail-tint: #fee4e2;
+  --fail-line: #f1aaa3;
+  --neutral-tint: #edf0f5;
 
   --sans: "IBM Plex Sans", system-ui, -apple-system, "Segoe UI", sans-serif;
   --mono: "IBM Plex Mono", ui-monospace, "Cascadia Mono", Consolas, monospace;
 
-  --radius: 10px;
-  --radius-small: 6px;
+  --radius: 12px;
+  --radius-small: 8px;
 }

@@ -62,6 +62,8 @@ export interface EvaluatorScore {
   name: string;
   label: string;
   description: string;
+  /** "five_point" scores 1 to 5; "pass_fail" only passes or fails, so its number is not shown. */
+  scale?: "five_point" | "pass_fail" | null;
   score?: number;
   threshold?: number | null;
   passed?: boolean | null;

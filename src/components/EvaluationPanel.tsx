@@ -34,19 +34,26 @@ function ExpectedCheck({ expected }: { expected: ExpectedAnswer }) {
 
 function EvaluatorRow({ evaluator }: { evaluator: EvaluatorScore }) {
   const scored = typeof evaluator.score === "number";
+  // A pass/fail evaluator returns 1 or 0, which would read as a low mark beside a 5.
+  const showNumber = scored && evaluator.scale !== "pass_fail";
   return (
     <li className="eval-row">
       <div className="eval-row-head">
         <span>{evaluator.label}</span>
         {scored && (
           <span className="eval-score">
-            <span className="eval-number">{formatScore(evaluator.score as number)}</span>
+            {showNumber && (
+              <span>
+                <span className="eval-number">{formatScore(evaluator.score as number)}</span>
+                {evaluator.scale === "five_point" && <span className="eval-scale"> of 5</span>}
+              </span>
+            )}
             {typeof evaluator.passed === "boolean" && <Verdict passed={evaluator.passed} />}
           </span>
         )}
       </div>
       {evaluator.description && <p className="eval-detail">{evaluator.description}</p>}
-      {scored && typeof evaluator.threshold === "number" && (
+      {showNumber && typeof evaluator.threshold === "number" && (
         <p className="eval-detail">Passes at {formatScore(evaluator.threshold)} or higher</p>
       )}
       {scored && evaluator.reason && <p className="eval-reason">{evaluator.reason}</p>}
