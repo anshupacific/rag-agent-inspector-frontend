@@ -1,5 +1,5 @@
-import { describeStep, stepName } from "../lib/format";
-import type { Step } from "../types";
+import { describeStep, stepName } from "./format";
+import type { Step } from "./types";
 
 export default function StepsPanel({ steps, running }: { steps: Step[]; running: boolean }) {
   if (steps.length === 0) {

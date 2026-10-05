@@ -1,4 +1,6 @@
-/** Shapes returned by the backend (see backend/app/response_parser.py and app/main.py). */
+/** Shapes for a question, the agent's answer and how it got there (backend: app/agent). */
+
+import type { Evaluation } from "../evaluation/types";
 
 export interface Source {
   number: number;
@@ -41,50 +43,6 @@ export interface AgentResult {
   response_id: string | null;
 }
 
-/** One pass/fail check that needs no model call. */
-export interface Check {
-  name: string;
-  passed: boolean;
-}
-
-/** Present when the question is one of the known test questions. */
-export interface ExpectedAnswer {
-  test_id: string;
-  kind: string;
-  expected: string;
-  note: string | null;
-  passed: boolean;
-  checks: Check[];
-}
-
-/** One Foundry built-in evaluator's verdict on an answer. */
-export interface EvaluatorScore {
-  name: string;
-  label: string;
-  description: string;
-  /** "five_point" scores 1 to 5; "pass_fail" only passes or fails, so its number is not shown. */
-  scale?: "five_point" | "pass_fail" | null;
-  score?: number;
-  threshold?: number | null;
-  passed?: boolean | null;
-  reason?: string | null;
-  /** Set instead of a score when the evaluator returned nothing. */
-  error?: string;
-}
-
-/** Evaluation of one answer: instant checks now, Foundry's scores when the run completes. */
-export interface Evaluation {
-  response_id: string;
-  status: "running" | "completed" | "failed";
-  declined: boolean;
-  checks: Check[];
-  expected: ExpectedAnswer | null;
-  evaluators: EvaluatorScore[];
-  judge_model: string;
-  elapsed_ms: number;
-  error: string | null;
-}
-
 /** One question and everything that happened while answering it. */
 export interface Run {
   id: string;
@@ -101,5 +59,3 @@ export interface Run {
   /** Shown when the evaluation could not be requested at all. */
   evaluationError?: string;
 }
-
-export type BackendStatus = "checking" | "ready" | "unreachable";

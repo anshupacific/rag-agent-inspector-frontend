@@ -1,7 +1,7 @@
-import type { Run } from "../types";
-import EvaluationPanel from "./EvaluationPanel";
-import EvidencePanel from "./EvidencePanel";
-import StepsPanel from "./StepsPanel";
+import EvidencePanel from "../agent/EvidencePanel";
+import StepsPanel from "../agent/StepsPanel";
+import type { Run } from "../agent/types";
+import EvaluationPanel from "../evaluation/EvaluationPanel";
 
 /** The right-hand column. Each section is its own coloured panel: steps, evaluation, evidence. */
 export default function Inspector({ run }: { run: Run | null }) {

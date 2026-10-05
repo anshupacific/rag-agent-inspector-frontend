@@ -1,7 +1,8 @@
-import { formatDuration, formatNumber, plural, stripMarkers } from "../lib/format";
-import type { Run } from "../types";
+import { formatDuration, formatNumber, plural } from "../core/format";
+import EvaluationSummary from "../evaluation/EvaluationSummary";
 import AnswerText from "./AnswerText";
-import EvaluationSummary from "./EvaluationSummary";
+import { stripMarkers } from "./format";
+import type { Run } from "./types";
 
 interface Props {
   run: Run;

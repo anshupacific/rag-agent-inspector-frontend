@@ -1,4 +1,4 @@
-import type { BackendStatus } from "../types";
+import type { BackendStatus } from "../core/backendStatus";
 
 const STATUS_TEXT: Record<BackendStatus, string> = {
   checking: "Waking the backend, this can take a minute",

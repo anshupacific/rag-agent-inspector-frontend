@@ -1,5 +1,5 @@
-import { plural } from "../lib/format";
-import type { AgentResult } from "../types";
+import { plural } from "../core/format";
+import type { AgentResult } from "./types";
 
 export default function EvidencePanel({ result }: { result: AgentResult }) {
   if (result.evidence.length === 0) {

@@ -1,11 +1,11 @@
-import AskPanel from "./components/AskPanel";
-import Header from "./components/Header";
-import Inspector from "./components/Inspector";
-import Intro from "./components/Intro";
-import RunCard from "./components/RunCard";
-import { DATASET_URL } from "./config";
-import { useAgentRuns } from "./hooks/useAgentRuns";
-import { useBackendStatus } from "./hooks/useBackendStatus";
+import AskPanel from "./agent/AskPanel";
+import RunCard from "./agent/RunCard";
+import { useAgentRuns } from "./agent/useAgentRuns";
+import { useBackendStatus } from "./core/backendStatus";
+import { DATASET_URL } from "./core/config";
+import Header from "./layout/Header";
+import Inspector from "./layout/Inspector";
+import Intro from "./layout/Intro";
 
 export default function App() {
   const backend = useBackendStatus();

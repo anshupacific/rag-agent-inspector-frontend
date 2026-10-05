@@ -1,5 +1,5 @@
-import { formatScore } from "../lib/format";
-import type { Evaluation } from "../types";
+import { formatScore } from "../core/format";
+import type { Evaluation } from "./types";
 
 /** One-line evaluation result under an answer; the full detail is in the inspector. */
 export default function EvaluationSummary({ evaluation }: { evaluation: Evaluation }) {

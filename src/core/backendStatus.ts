@@ -1,10 +1,22 @@
+/** Is the backend awake? Checked once when the page loads. */
+
 import { useEffect, useState } from "react";
 
-import { checkHealth } from "../api/client";
-import type { BackendStatus } from "../types";
+import { API_BASE_URL } from "./config";
+
+export type BackendStatus = "checking" | "ready" | "unreachable";
 
 const ATTEMPTS = 20;
 const DELAY_MS = 3000;
+
+export async function checkHealth(baseUrl = API_BASE_URL): Promise<boolean> {
+  try {
+    const response = await fetch(`${baseUrl}/health`);
+    return response.ok;
+  } catch {
+    return false;
+  }
+}
 
 /** Pings /health on load. This also wakes a backend that has gone to sleep. */
 export function useBackendStatus(): BackendStatus {
