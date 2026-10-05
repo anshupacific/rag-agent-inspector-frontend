@@ -10,27 +10,37 @@
   --muted: #586478;
   --link: #1d4ed8;
 
-  /* Ask a question: amber */
-  --ask: #b45309;
-  --ask-ink: #8a3c06;
-  --ask-tint: #fff5e2;
-  --ask-line: #efd49c;
+  /* Ask a question: dark band with a yellow action */
+  --band: #172033;
+  --band-text: #ffffff;
+  --band-soft: #c9d4e2;
+  --action: #facc15;
+  --action-hover: #eab308;
+  --action-ink: #172033;
+
+  /* Note about the deliberately wrong facts: amber */
+  --note-ink: #8a3c06;
+  --note-tint: #fff5e2;
+  --note-line: #efd49c;
 
   /* What the agent did: blue */
   --steps: #1d4ed8;
   --steps-tint: #eef3ff;
   --steps-line: #c3d3fa;
   --steps-highlight: #dbe6ff;
+  --steps-on-dark: #6f9bff;
 
   /* Evaluation: violet */
   --eval: #6d28d9;
   --eval-tint: #f4efff;
   --eval-line: #d8c9fa;
+  --eval-on-dark: #b79cff;
 
   /* Evidence: teal */
   --evidence: #0f766e;
   --evidence-tint: #e8f6f3;
   --evidence-line: #b5ded8;
+  --evidence-on-dark: #5fc9bd;
 
   /* Results, the same in every section */
   --pass: #166534;

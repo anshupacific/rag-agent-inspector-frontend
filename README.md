@@ -7,8 +7,8 @@ agent's answer next to the steps it took and the passages it found and used.
 
     src/App.tsx          arranges the page
     src/core/            backend URL, HTTP helper, backend wake-up check, number formatting
-    src/layout/          Header, Intro, and the Inspector column
-    src/agent/           asking a question, the live stream, answer card, steps and evidence panels
+    src/layout/          Header, the Inspector column, and the note about the wrong-on-purpose facts
+    src/agent/           the ask band, test questions, live stream, answer card, steps and evidence panels
     src/evaluation/      evaluation calls, polling, the Evaluation panel and summary
       rule_based/        the instant checks
       llm_judge/         Foundry's evaluator scores

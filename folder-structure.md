@@ -27,11 +27,11 @@ Shared plumbing used by every other folder: the backend URL, the HTTP helper tha
 
 ## src/layout/
 
-The page frame: the header, the intro text, and the inspector column that stacks the steps, evaluation and evidence panels. These files arrange other components and hold no logic.
+The page frame: the header, the note explaining that the guides are wrong on purpose, and the inspector column that stacks the steps, evaluation and evidence panels. These files arrange other components and hold no logic.
 
 ## src/agent/
 
-Asking a question and showing the answer. It calls the backend, reads the live stream of steps, keeps the list of questions asked, and draws the question box, the answer card, the steps panel and the evidence panel.
+Asking a question and showing the answer. It calls the backend, reads the live stream of steps, keeps the list of questions asked, and draws the dark ask band, the test questions, the answer card, the steps panel and the evidence panel.
 
 ## src/evaluation/
 
