@@ -47,6 +47,8 @@ export interface AgentResult {
 export interface Run {
   id: string;
   question: string;
+  /** When the question was asked (ms since epoch), for the "so far" counter. */
+  startedAt: number;
   status: "running" | "done" | "error";
   /** Answer text as it streams in, before the final result arrives. */
   liveText: string;

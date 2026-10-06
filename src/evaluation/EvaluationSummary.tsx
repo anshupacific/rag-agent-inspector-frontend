@@ -1,4 +1,5 @@
 import { formatScore } from "../core/format";
+import Spinner from "../core/Spinner";
 import type { Evaluation } from "./types";
 
 /** One-line evaluation result under an answer; the full detail is in the inspector. */
@@ -12,7 +13,11 @@ export default function EvaluationSummary({ evaluation }: { evaluation: Evaluati
           Expected answer: {evaluation.expected.passed ? "matched" : "not matched"}
         </li>
       )}
-      {evaluation.status === "running" && <li className="run-eval-pending">Foundry is scoring this answer</li>}
+      {evaluation.status === "running" && (
+        <li className="run-eval-pending">
+          <Spinner /> Foundry is scoring this answer
+        </li>
+      )}
       {evaluation.status === "failed" && <li className="run-eval-pending">Foundry scores unavailable</li>}
       {scored.map((evaluator) => (
         <li key={evaluator.name} className={evaluator.passed === false ? "run-eval-fail" : "run-eval-pass"}>

@@ -1,4 +1,5 @@
 import { formatDuration, formatScore } from "../../core/format";
+import Spinner from "../../core/Spinner";
 import type { Evaluation, EvaluatorScore } from "../types";
 import Verdict from "../Verdict";
 
@@ -12,7 +13,7 @@ export default function FoundryEvaluators({ evaluation }: { evaluation: Evaluati
       <h3>Foundry evaluators</h3>
       {evaluation.status === "running" && (
         <p className="eval-running">
-          Foundry is scoring this answer with {evaluation.judge_model} as the judge
+          <Spinner /> Foundry is scoring this answer with {evaluation.judge_model} as the judge
           {evaluation.elapsed_ms >= 1000 ? ` (${formatDuration(evaluation.elapsed_ms)} so far)` : ""}.
         </p>
       )}

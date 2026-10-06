@@ -37,7 +37,7 @@ export function useAgentRuns() {
       if (!text || busy) return;
       const id = crypto.randomUUID();
       setRuns((current) => [
-        { id, question: text, status: "running", liveText: "", liveSteps: [] },
+        { id, question: text, startedAt: Date.now(), status: "running", liveText: "", liveSteps: [] },
         ...current,
       ]);
       setSelectedId(id);

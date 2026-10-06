@@ -1,5 +1,7 @@
 import { type FormEvent, useState } from "react";
 
+import Spinner from "../core/Spinner";
+
 /** Shown in the empty box, and asked if the visitor presses the button without typing. */
 const EXAMPLE_QUESTION = "What is the currency of USA?";
 
@@ -32,11 +34,18 @@ export default function AskPanel({ busy, onAsk }: Props) {
             value={question}
             maxLength={500}
             autoComplete="off"
-            placeholder={EXAMPLE_QUESTION}
+            placeholder={busy ? "Wait for the current answer" : EXAMPLE_QUESTION}
+            disabled={busy}
             onChange={(event) => setQuestion(event.target.value)}
           />
-          <button type="submit" className="primary" disabled={busy}>
-            {busy ? "Answering" : "Ask the agent"}
+          <button type="submit" className="primary" disabled={busy} aria-busy={busy}>
+            {busy ? (
+              <>
+                <Spinner /> Answering
+              </>
+            ) : (
+              "Ask the agent"
+            )}
           </button>
         </div>
       </form>

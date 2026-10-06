@@ -1,9 +1,16 @@
+import Spinner from "../core/Spinner";
 import { describeStep, stepName } from "./format";
 import type { Step } from "./types";
 
 export default function StepsPanel({ steps, running }: { steps: Step[]; running: boolean }) {
   if (steps.length === 0) {
-    return <p className="panel-empty">{running ? "Waiting for the first step." : "No steps were reported."}</p>;
+    return running ? (
+      <p className="panel-waiting">
+        <Spinner /> Waiting for the agent's first step
+      </p>
+    ) : (
+      <p className="panel-empty">No steps were reported.</p>
+    );
   }
   return (
     <ol className="steps">

@@ -194,9 +194,19 @@ input {
 }
 
 .primary:disabled {
-  color: #aab4c4;
+  color: #dfe5ee;
   background: #3a465c;
-  cursor: default;
+  cursor: progress;
+}
+
+.primary .spinner {
+  margin-right: 6px;
+}
+
+.ask-row input:disabled {
+  color: #586478;
+  background: #dfe4ec;
+  cursor: progress;
 }
 
 .ask-legend {
@@ -386,6 +396,11 @@ input {
   color: var(--muted);
 }
 
+/* Nothing to show yet while the agent is still working. */
+.run-answer:empty {
+  display: none;
+}
+
 .answer-text {
   max-width: 64ch;
   font-size: 18px;
@@ -406,8 +421,82 @@ input {
   color: var(--evidence);
 }
 
+/* Progress while the agent is working */
+
+.spinner {
+  display: inline-block;
+  flex: 0 0 auto;
+  width: 1em;
+  height: 1em;
+  vertical-align: -0.15em;
+  border: 2px solid currentColor;
+  border-right-color: transparent;
+  border-radius: 50%;
+  animation: spin 0.7s linear infinite;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.run-progress {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.progress {
+  height: 4px;
+  overflow: hidden;
+  background: var(--steps-highlight);
+  border-radius: 999px;
+}
+
+.progress::before {
+  content: "";
+  display: block;
+  width: 35%;
+  height: 100%;
+  background: var(--steps);
+  border-radius: 999px;
+  animation: slide 1.3s ease-in-out infinite;
+}
+
+@keyframes slide {
+  from {
+    transform: translateX(-100%);
+  }
+  to {
+    transform: translateX(290%);
+  }
+}
+
 .run-working {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px;
+  font-weight: 500;
+  color: var(--steps);
+}
+
+.run-elapsed {
+  margin-left: auto;
+  font-family: var(--mono);
+  font-size: 14px;
+  font-weight: 400;
   color: var(--muted);
+}
+
+.panel-waiting {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--steps);
 }
 
 .run-error {
@@ -476,6 +565,9 @@ input {
 }
 
 .run-eval-pending {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
   color: var(--eval);
   background: var(--eval-tint);
   border-color: var(--eval-line);
@@ -837,7 +929,15 @@ input {
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .step-active .step-text::after {
+  .step-active .step-text::after,
+  .spinner {
+    animation: none;
+  }
+
+  /* No sliding bar: show a steady half-filled one, and rely on the text and the counter. */
+  .progress::before {
+    width: 100%;
+    opacity: 0.5;
     animation: none;
   }
 }
