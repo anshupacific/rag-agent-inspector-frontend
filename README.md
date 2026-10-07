@@ -12,6 +12,7 @@ agent's answer next to the steps it took and the passages it found and used.
     src/evaluation/      evaluation calls, polling, the Evaluation panel and summary
       rule_based/        the instant checks
       llm_judge/         Foundry's evaluator scores
+    src/guardrails/      the "Blocked by the guardrail" notice and the Guardrail panel
     src/styles/          design tokens and page styles
     public/              favicon and Static Web Apps config
 

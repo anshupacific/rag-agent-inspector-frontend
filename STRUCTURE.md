@@ -11,6 +11,7 @@ agent-inspector-frontend/
     evaluation/
       rule_based/
       llm_judge/
+    guardrails/
     styles/
   public/
 ```
@@ -27,11 +28,11 @@ Shared plumbing used by every other folder: the backend URL, the HTTP helper tha
 
 ## src/layout/
 
-The page frame: the header, the intro text, and the inspector column that stacks the steps, evaluation and evidence panels. These files arrange other components and hold no logic.
+The page frame: the header, the note explaining that the guides are wrong on purpose, and the inspector column that stacks the steps, guardrail, evaluation and evidence panels. These files arrange other components and hold no logic.
 
 ## src/agent/
 
-Asking a question and showing the answer. It calls the backend, reads the live stream of steps, keeps the list of questions asked, and draws the question box, the answer card, the steps panel and the evidence panel.
+Asking a question and showing the answer. It calls the backend, reads the live stream of steps, keeps the list of questions asked, and draws the dark ask band, the test questions, the answer card, the steps panel and the evidence panel.
 
 ## src/evaluation/
 
@@ -44,6 +45,10 @@ Displays the instant checks that the backend runs in its own code: whether the a
 ### src/evaluation/llm_judge/
 
 Displays the scores from Foundry's built-in evaluators: the score, pass or fail, and the judge model's reason for each one, with a waiting line while Foundry is still scoring.
+
+## src/guardrails/
+
+Showing what the agent's Foundry guardrail did. When a question is blocked, it draws the "Blocked by the guardrail" notice in place of an answer, naming the risk that fired. In the inspector it draws the Guardrail panel: the scan of the question and the scan of the answer, each listing every risk checked and whether it was clear, allowed or blocked. It makes no backend calls of its own; the data arrives with the answer.
 
 ## src/styles/
 
@@ -61,4 +66,5 @@ Files served as they are: the favicon and the Static Web Apps configuration.
 | `src/evaluation/` | `app/api/evaluations.py`, `app/evaluation/` |
 | `src/evaluation/rule_based/` | `app/evaluation/rule_based/` |
 | `src/evaluation/llm_judge/` | `app/evaluation/llm_judge/` |
+| `src/guardrails/` | `app/guardrails/` |
 | `src/core/backendStatus.ts` | `app/api/health.py` |

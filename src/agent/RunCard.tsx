@@ -2,6 +2,7 @@ import { formatDuration, formatNumber, plural } from "../core/format";
 import Spinner from "../core/Spinner";
 import { useTicker } from "../core/useTicker";
 import EvaluationSummary from "../evaluation/EvaluationSummary";
+import BlockedNotice from "../guardrails/BlockedNotice";
 import AnswerText from "./AnswerText";
 import { describeStep, stripMarkers } from "./format";
 import type { Run } from "./types";
@@ -23,12 +24,13 @@ function currentActivity(run: Run): string {
 export default function RunCard({ run, selected, onInspect }: Props) {
   const { result } = run;
   const cited = result?.sources.filter((source) => source.cited) ?? [];
+  const blocked = result?.blocked === true && result.guardrail !== undefined;
   const running = run.status === "running";
   const now = useTicker(running);
   const elapsed = Math.max(0, Math.round((now - run.startedAt) / 1000));
 
   return (
-    <article className={`run${selected ? " run-selected" : ""}`}>
+    <article className={`run${selected ? " run-selected" : ""}${blocked ? " run-blocked" : ""}`}>
       <p className="run-question">{run.question}</p>
 
       {running && (
@@ -47,8 +49,10 @@ export default function RunCard({ run, selected, onInspect }: Props) {
       <div className="run-answer" aria-live="polite">
         {running && run.liveText && <AnswerText text={stripMarkers(run.liveText)} />}
         {run.status === "error" && <p className="run-error">{run.error}</p>}
-        {result && <AnswerText text={result.answer} />}
+        {result && !blocked && <AnswerText text={result.answer} />}
       </div>
+
+      {blocked && result?.guardrail && <BlockedNotice guardrail={result.guardrail} />}
 
       {result && cited.length > 0 && (
         <ul className="run-sources">
@@ -67,7 +71,16 @@ export default function RunCard({ run, selected, onInspect }: Props) {
         </ul>
       )}
 
-      {result && (
+      {result && blocked && (
+        <dl className="run-metrics">
+          <div>
+            <dt>Stopped after</dt>
+            <dd>{formatDuration(result.duration_ms)}</dd>
+          </div>
+        </dl>
+      )}
+
+      {result && !blocked && (
         <dl className="run-metrics">
           <div>
             <dt>Time</dt>

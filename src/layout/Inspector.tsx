@@ -2,8 +2,9 @@ import EvidencePanel from "../agent/EvidencePanel";
 import StepsPanel from "../agent/StepsPanel";
 import type { Run } from "../agent/types";
 import EvaluationPanel from "../evaluation/EvaluationPanel";
+import GuardrailPanel from "../guardrails/GuardrailPanel";
 
-/** The right-hand column. Each section is its own coloured panel: steps, evaluation, evidence. */
+/** The right-hand column. Each section is its own coloured panel: steps, guardrail, evaluation, evidence. */
 export default function Inspector({ run }: { run: Run | null }) {
   if (!run) {
     return (
@@ -22,6 +23,7 @@ export default function Inspector({ run }: { run: Run | null }) {
 
   const { result } = run;
   const steps = result ? result.steps : run.liveSteps;
+  const blocked = result?.blocked === true;
 
   return (
     <aside className="inspector" aria-label="Agent inspector">
@@ -31,11 +33,24 @@ export default function Inspector({ run }: { run: Run | null }) {
           <p>{run.question}</p>
         </header>
         <div className="panel-body">
-          <StepsPanel steps={steps} running={run.status === "running"} />
+          <StepsPanel steps={steps} running={run.status === "running"} blocked={blocked} />
         </div>
       </section>
 
-      {result && result.response_id && (
+      {result?.guardrail && (
+        <section className="panel panel-guardrail">
+          <header className="panel-head">
+            <h2>Guardrail</h2>
+            <p>{blocked ? "This question was stopped" : "Checked on the way in and on the way out"}</p>
+          </header>
+          <div className="panel-body">
+            <GuardrailPanel guardrail={result.guardrail} />
+          </div>
+        </section>
+      )}
+
+      {/* A blocked question has no answer, so there is nothing to evaluate or cite. */}
+      {result && !blocked && result.response_id && (
         <section className="panel panel-evaluation">
           <header className="panel-head">
             <h2>Evaluation</h2>
@@ -47,7 +62,7 @@ export default function Inspector({ run }: { run: Run | null }) {
         </section>
       )}
 
-      {result && (
+      {result && !blocked && (
         <section className="panel panel-evidence">
           <header className="panel-head">
             <h2>Evidence</h2>

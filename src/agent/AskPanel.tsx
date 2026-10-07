@@ -50,10 +50,11 @@ export default function AskPanel({ busy, onAsk }: Props) {
         </div>
       </form>
 
-      {/* The three colours match the three panels of the inspector. */}
+      {/* The colours match the panels of the inspector. */}
       <ul className="ask-legend" aria-label="Each answer shows">
         <li className="ask-legend-lead">Each answer shows:</li>
         <li className="ask-legend-steps">its steps</li>
+        <li className="ask-legend-guardrail">its guardrail checks</li>
         <li className="ask-legend-evaluation">its evaluation</li>
         <li className="ask-legend-evidence">its evidence</li>
       </ul>

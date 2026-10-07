@@ -42,6 +42,12 @@
   --evidence-line: #b5ded8;
   --evidence-on-dark: #5fc9bd;
 
+  /* Guardrail: slate */
+  --guard: #334155;
+  --guard-tint: #f1f5f9;
+  --guard-line: #cbd5e1;
+  --guard-on-dark: #cbd5e1;
+
   /* Results, the same in every section */
   --pass: #166534;
   --pass-tint: #dcfce7;

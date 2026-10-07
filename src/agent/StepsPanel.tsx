@@ -2,8 +2,15 @@ import Spinner from "../core/Spinner";
 import { describeStep, stepName } from "./format";
 import type { Step } from "./types";
 
-export default function StepsPanel({ steps, running }: { steps: Step[]; running: boolean }) {
-  if (steps.length === 0) {
+interface Props {
+  steps: Step[];
+  running: boolean;
+  /** True when the guardrail stopped the question; adds a closing line saying so. */
+  blocked?: boolean;
+}
+
+export default function StepsPanel({ steps, running, blocked = false }: Props) {
+  if (steps.length === 0 && !blocked) {
     return running ? (
       <p className="panel-waiting">
         <Spinner /> Waiting for the agent's first step
@@ -29,6 +36,17 @@ export default function StepsPanel({ steps, running }: { steps: Step[]; running:
           </li>
         );
       })}
+      {blocked && (
+        <li className="step step-blocked">
+          <span className="step-number" aria-hidden="true">
+            {steps.length + 1}
+          </span>
+          <div>
+            <span className="step-text">Stopped by the guardrail</span>
+            <code className="step-name">content_filter</code>
+          </div>
+        </li>
+      )}
     </ol>
   );
 }

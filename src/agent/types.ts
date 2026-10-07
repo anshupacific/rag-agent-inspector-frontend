@@ -1,6 +1,7 @@
 /** Shapes for a question, the agent's answer and how it got there (backend: app/agent). */
 
 import type { Evaluation } from "../evaluation/types";
+import type { Guardrail } from "../guardrails/types";
 
 export interface Source {
   number: number;
@@ -40,7 +41,12 @@ export interface AgentResult {
   counts: { chunks_retrieved: number; chunks_cited: number };
   agent: { name: string; version: string };
   duration_ms: number;
+  /** Null when the guardrail blocked the question: there is no answer to evaluate. */
   response_id: string | null;
+  /** True when the agent's guardrail stopped the question. `answer` then holds the reason. */
+  blocked?: boolean;
+  /** What the guardrail checked, and what it blocked if anything. */
+  guardrail?: Guardrail;
 }
 
 /** One question and everything that happened while answering it. */
