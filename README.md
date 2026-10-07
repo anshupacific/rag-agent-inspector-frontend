@@ -200,9 +200,3 @@ Open http://localhost:5173.
 - **The corpus is small and clean.** Five short guides show the method. They do not show how retrieval behaves on long, messy real documents.
 - **The backend keeps state in memory,** which suits a single instance. Scaling out would need a shared store for the rate limiter and recent answers.
 
-## What I would add next
-
-- A batch evaluation run over all 218 questions, with pass rates per question type, as a gate in the deployment pipeline
-- A side-by-side view of the grounded agent and the bare model on the same question
-- Guardrail controls for indirect prompt injection and groundedness
-- Infrastructure as code for all Azure resources
