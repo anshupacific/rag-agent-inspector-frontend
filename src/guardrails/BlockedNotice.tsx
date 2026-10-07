@@ -21,9 +21,6 @@ export default function BlockedNotice({ guardrail }: { guardrail: Guardrail }) {
             ))}
           </ul>
         )}
-        <p className="blocked-source">
-          Guardrail: <code>{guardrail.name}</code>
-        </p>
       </div>
     </div>
   );

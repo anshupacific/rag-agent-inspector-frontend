@@ -21,7 +21,6 @@ export interface GuardrailScan {
 }
 
 export interface Guardrail {
-  name: string;
   blocked: boolean;
   /** Where a block happened: "user_input" or "output". */
   stage: string | null;

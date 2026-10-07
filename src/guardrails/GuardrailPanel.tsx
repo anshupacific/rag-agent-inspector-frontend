@@ -50,9 +50,7 @@ export default function GuardrailPanel({ guardrail }: { guardrail: Guardrail }) 
       ) : (
         guardrail.checks.map((scan, index) => <Scan key={`${scan.stage}-${index}`} scan={scan} />)
       )}
-      <p className="guard-footnote">
-        Enforced by Foundry with the guardrail <code>{guardrail.name}</code>, assigned to the agent.
-      </p>
+      <p className="guard-footnote">Enforced by a Foundry guardrail assigned to the agent.</p>
     </div>
   );
 }
