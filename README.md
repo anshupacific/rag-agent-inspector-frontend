@@ -170,7 +170,7 @@ frontend/src/
   guardrails/     blocked notice and guardrail panel
 ```
 
-Backend repository: `<add link>`
+Backend repository: `https://github.com/anshupacific/rag-agent-inspector-backend`
 
 ## Run it locally
 
